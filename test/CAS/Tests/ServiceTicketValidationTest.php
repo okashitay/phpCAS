@@ -37,7 +37,11 @@
  * @license  http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
  * @link     https://wiki.jasig.org/display/CASC/phpCAS
  */
-class CAS_Tests_ServiceTicketValidationTest extends PHPUnit_Framework_TestCase
+require_once dirname(__FILE__) ."/../../../vendor/autoload.php";
+
+use PHPUnit\Framework\TestCase;
+
+class CAS_Tests_ServiceTicketValidationTest extends TestCase
 {
     /**
      * @var CAS_Client
@@ -184,10 +188,11 @@ class CAS_Tests_ServiceTicketValidationTest extends PHPUnit_Framework_TestCase
     public function testInvalidTicketFailure()
     {
         $this->object->setTicket('ST-1856339-aA5Yuvrxzpv8Tau1cYQ7');
-        ob_start();
+        // Comment out for risky tests
+        // ob_start();
         $result = $this->object
             ->validateCAS20($url, $text_response, $tree_response);
-        ob_end_clean();
+        // ob_end_clean();
         $this->assertTrue($result);
         $this->assertEquals(
             "<cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas'>

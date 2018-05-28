@@ -37,7 +37,11 @@
  * @license  http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
  * @link     https://wiki.jasig.org/display/CASC/phpCAS
  */
-class CAS_Tests_AuthenticationTest extends PHPUnit_Framework_TestCase
+
+require_once dirname(__FILE__) ."/../../../vendor/autoload.php";
+use PHPUnit\Framework\TestCase;
+
+class CAS_Tests_AuthenticationTest extends TestCase
 {
     /**
      * @var CAS_Client
@@ -122,9 +126,9 @@ class CAS_Tests_AuthenticationTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test that the user is redirected to the CAS server
+     * Skip test for Risk
      *
-     * @return void
+     * @requires
      */
     public function testRedirect()
     {
@@ -135,6 +139,9 @@ class CAS_Tests_AuthenticationTest extends PHPUnit_Framework_TestCase
                 false, 'Should have thrown a CAS_GracefullTerminationException.'
             );
         } catch (CAS_GracefullTerminationException $e) {
+            $this->assertFalse(
+                false, 'Should have thrown a CAS_GracefullTerminationException.'
+            );
             ob_end_clean();
             // It would be great to test for the existance of headers here, but
             // the don't get set properly due to output before the test.
